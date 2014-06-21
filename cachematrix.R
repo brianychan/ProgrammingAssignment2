@@ -1,8 +1,8 @@
 ## These functions combine to invert a matrix, while utilizing caching for efficiency
 ## We assume a square invertible matrix                   
 
-## makeCacheMatrix creates a list object of functions that facilitate matrix caching
 
+## makeCacheMatrix creates a list object of functions that facilitate matrix caching
 
 makeCacheMatrix <- function(x = matrix()) {
         i <- NULL                                       ##clear cache
@@ -11,7 +11,7 @@ makeCacheMatrix <- function(x = matrix()) {
                 i <<- NULL
         }
         get <- function() x                             ##function: retrieve value for x
-        setinverse <- function(inverse) i <<- inverse   ##function: set global value for i
+        setinverse <- function(inverse) i <<- inverse   ##function: set inverse as global value for i
         getinverse <- function() i                      ##function: retrieve value for i
         
         list(set = set, get = get,                      ##return list of functions
@@ -25,7 +25,6 @@ makeCacheMatrix <- function(x = matrix()) {
 ## If the inverse is in the cache, it is retrieved and returned. 
 ## If the inverse is not cached, the inverse is solved for and cached.
 
-
 cacheSolve <- function(x, ...) {
         i <- x$getinverse()                            ##testing for a cached object
         if(!is.null(i)) {                              
@@ -34,7 +33,7 @@ cacheSolve <- function(x, ...) {
         }
         
         data <- x$get()                                ##in the event of no cached object:
-        i <- solve(data)                               ##solve and cache
+        i <- solve(data)                               ##solve, and cache and return result
         x$setinverse(i)
         i
 }
