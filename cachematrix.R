@@ -5,7 +5,7 @@
 ## makeCacheMatrix creates a list object of functions that facilitate matrix caching
 
 makeCacheMatrix <- function(x = matrix()) {
-        i <- NULL                                       ##clear cache
+        i <- NULL                                       ##declare cache object
         set <- function(y) {
                 x <<- y                                 ##function: set matrix and reset cache
                 i <<- NULL
