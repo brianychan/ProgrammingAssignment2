@@ -1,15 +1,40 @@
-## Put comments here that give an overall description of what your
-## functions do
+## These functions combine to invert a matrix, while utilizing caching for efficiency
+## We assume a square invertible matrix                   
 
-## Write a short comment describing this function
+## makeCacheMatrix creates a list object of functions that facilitate matrix caching
+
 
 makeCacheMatrix <- function(x = matrix()) {
-
+        i <- NULL                                       ##clear cache
+        set <- function(y) {
+                x <<- y                                 ##function: set matrix and reset cache
+                i <<- NULL
+        }
+        get <- function() x                             ##function: retrieve value for x
+        setinverse <- function(inverse) i <<- inverse   ##function: set global value for i
+        getinverse <- function() i                      ##function: retrieve value for i
+        
+        list(set = set, get = get,                      ##return list of functions
+             setinverse = setinverse,
+             getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve returns the inverse of the matrix
+## The function checks to see if the inverse of the matrix is cached:
+## If the inverse is in the cache, it is retrieved and returned. 
+## If the inverse is not cached, the inverse is solved for and cached.
+
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        i <- x$getinverse()                            ##testing for a cached object
+        if(!is.null(i)) {                              
+                message("getting cached data")         ##in the event of a cached object:
+                return(i)                              ##show message and return cache
+        }
+        
+        data <- x$get()                                ##in the event of no cached object:
+        i <- solve(data)                               ##solve and cache
+        x$setinverse(i)
+        i
 }
